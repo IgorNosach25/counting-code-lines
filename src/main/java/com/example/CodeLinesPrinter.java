@@ -33,7 +33,7 @@ class CodeLinesPrinter {
         List<String> paths = new ArrayList<>();
 
         if (files == null) {
-            return countCodeLinesForSingleClass(currentFile);
+            return countCodeLinesForSingleFile(currentFile);
         }
 
         int codeLinesInDirectory = 0;
@@ -58,7 +58,7 @@ class CodeLinesPrinter {
         return new CodeLineDto(codeLinesInDirectory, paths);
     }
 
-    private CodeLineDto countCodeLinesForSingleClass(File currentFile) throws IOException {
+    private CodeLineDto countCodeLinesForSingleFile(File currentFile) throws IOException {
         Path localPath = Paths.get(currentFile.getPath());
         int codeLinesCount = codeLinesCounter.getCodeLinesCount(localPath);
         return new CodeLineDto(codeLinesCount, List.of(currentFile.getName() + " : " + codeLinesCount));
