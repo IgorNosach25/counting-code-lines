@@ -9,8 +9,7 @@ import java.util.stream.Collectors;
 class CodeLinesCounter {
 
   int getCodeLinesCount(Path pathToFile) throws IOException {
-    // can be improved if necessary by reading only first letters to find out either line comment or
-    // not
+    //Can be improved if necessary by reading only first letters to find out either line is comment or not
     List<String> allLines = getAllLines(pathToFile);
     int codeLinesCount = 0;
     boolean isInsideComment = false;

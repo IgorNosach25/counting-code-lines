@@ -41,6 +41,6 @@ public class CodeLinesCounterTest {
   public void shouldCountCodeWithoutComments() throws IOException {
     Path path = Paths.get("src/test/java/resources/WithoutComment.java");
     int codeLinesCount = codeLinesCounter.getCodeLinesCount(path);
-    assertEquals(5, codeLinesCount);
+    assertEquals(4, codeLinesCount);
   }
 }

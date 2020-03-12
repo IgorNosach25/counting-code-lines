@@ -59,7 +59,7 @@ class CodeLinesPrinter {
     return new CodeLineDto(codeLinesCount, List.of(currentFile.getName() + " : " + codeLinesCount));
   }
 
-  // it is necessary for one iteration to count all code lines and build a path's tree with spaces
+  //It is necessary for one iteration to count all code lines and build a path's tree with spaces
   @AllArgsConstructor
   @Getter
   private static class CodeLineDto {
