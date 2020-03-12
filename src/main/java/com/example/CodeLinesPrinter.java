@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,8 +23,6 @@ class CodeLinesPrinter {
     }
 
     private CodeLineDto findAllCodeLines(String path) throws IOException {
-        if (path.isEmpty()) return new CodeLineDto(0, Collections.singletonList(""));
-
         File currentFile = new File(path);
         if (!currentFile.exists()) throw new RuntimeException("File with path [ " + path + " ] not found!");
 
@@ -41,12 +38,12 @@ class CodeLinesPrinter {
             if (file.isDirectory()) {
                 CodeLineDto codeLines = findAllCodeLines(file.getPath());
                 codeLinesInDirectory += codeLines.codeLineCount;
-                List<String> loc = codeLines
+                List<String> foundedPaths = codeLines
                         .paths
                         .stream()
                         .map(line -> " " + line)
                         .collect(Collectors.toList());
-                paths.addAll(loc);
+                paths.addAll(foundedPaths);
             } else {
                 Path localPath = Paths.get(file.getPath());
                 int codeLinesCount = codeLinesCounter.getCodeLinesCount(localPath);
