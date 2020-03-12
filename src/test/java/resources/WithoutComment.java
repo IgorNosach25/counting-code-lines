@@ -1,7 +1,5 @@
 package resources;
 
 public class WithoutComment {
-    public static void main(String[] args) {
-
-    }
+  public static void main(String[] args) {}
 }
