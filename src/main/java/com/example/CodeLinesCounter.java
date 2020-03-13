@@ -27,7 +27,7 @@ class CodeLinesCounter {
       } else if (!line.startsWith(SINGLE_LINE_COMMENT_START)) {
         codeLinesCount++;
       }
-      checkIsLineIsComment(line);
+      checkIfLineEndIsComment(line);
     }
     return codeLinesCount;
   }
@@ -36,7 +36,7 @@ class CodeLinesCounter {
     return line.matches(CHECK_IF_CODE_EXISTS_AFTER_COMMENT_REGEX);
   }
 
-  private void checkIsLineIsComment(String line) {
+  private void checkIfLineEndIsComment(String line) {
     boolean isInsideString = false;
     for (int i = 0; i < line.length() - 1; i++) {
       if (line.charAt(i) == '"') {
