@@ -34,7 +34,7 @@ public class CodeLinesCounterTest {
   public void shouldNotCountMultiRowComment() throws IOException {
     Path path = Paths.get("src/test/java/resources/MultiRowComment.java");
     int codeLinesCount = codeLinesCounter.getCodeLinesCount(path);
-    assertEquals(3, codeLinesCount);
+    assertEquals(4, codeLinesCount);
   }
 
   @Test
@@ -42,5 +42,26 @@ public class CodeLinesCounterTest {
     Path path = Paths.get("src/test/java/resources/WithoutComment.java");
     int codeLinesCount = codeLinesCounter.getCodeLinesCount(path);
     assertEquals(4, codeLinesCount);
+  }
+
+  @Test
+  public void shouldCountCodeLineInCommentsAndCodeInTheSameLine() throws IOException {
+    Path path = Paths.get("src/test/java/resources/CommentInCodeLine.java");
+    int codeLinesCount = codeLinesCounter.getCodeLinesCount(path);
+    assertEquals(5, codeLinesCount);
+  }
+
+  @Test
+  public void shouldCountCodeLineInMultiRowCommentLine() throws IOException {
+    Path path = Paths.get("src/test/java/resources/MultiRowCommentInSingleLine.java");
+    int codeLinesCount = codeLinesCounter.getCodeLinesCount(path);
+    assertEquals(8, codeLinesCount);
+  }
+
+  @Test
+  public void shouldCountCodeLineIfMultiCommentsStartsInTheEnd() throws IOException {
+    Path path = Paths.get("src/test/java/resources/MultiRowCommentAtTheEndOfCode.java");
+    int codeLinesCount = codeLinesCounter.getCodeLinesCount(path);
+    assertEquals(6, codeLinesCount);
   }
 }
