@@ -64,4 +64,19 @@ public class CodeLinesCounterTest {
     int codeLinesCount = codeLinesCounter.getCodeLinesCount(path);
     assertEquals(6, codeLinesCount);
   }
+
+  //http://codekata.com/kata/kata13-counting-code-lines/
+  @Test
+  public void shouldCountCodeLineInExampleFromLink() throws IOException {
+    Path path = Paths.get("src/test/java/resources/Dave.java");
+    int codeLinesCount = codeLinesCounter.getCodeLinesCount(path);
+    assertEquals(5, codeLinesCount);
+  }
+
+  @Test
+  public void shouldCountCodeLineInExampleFromLink2() throws IOException {
+    Path path = Paths.get("src/test/java/resources/Hello.java");
+    int codeLinesCount = codeLinesCounter.getCodeLinesCount(path);
+    assertEquals(6, codeLinesCount);
+  }
 }

@@ -8,7 +8,9 @@ import java.util.stream.Collectors;
 
 class CodeLinesCounter {
 
-  private boolean isInsideCode = false;
+  // http://codekata.com/kata/kata13-counting-code-lines/ -- all requirements are describe here
+  private boolean isInsideComment = false;
+
   int getCodeLinesCount(Path pathToFile) throws IOException {
 
     //Can be improved if necessary by reading only first letters to find out either line is comment or not
@@ -16,7 +18,7 @@ class CodeLinesCounter {
     int codeLinesCount = 0;
 
     for (String line : allLines) {
-      if (isInsideCode || line.startsWith("/*")) {
+      if (isInsideComment || line.startsWith("/*")) {
         if (lineInsideCommentContainsCode(line)) {
           codeLinesCount++;
         }
@@ -33,10 +35,16 @@ class CodeLinesCounter {
   }
 
   private void isLineInComment(String line) {
+    boolean isInsideString = false;
     for (int i = 0; i < line.length() - 1; i++) {
-      String substring = line.substring(i, i + 2);
-      if (substring.equals("/*")) isInsideCode = true;
-      else if (substring.equals("*/")) isInsideCode = false;
+      if (line.charAt(i) == '"') {
+        isInsideString = !isInsideString;
+      }
+      if (!isInsideString) {
+        String substring = line.substring(i, i + 2);
+        if (substring.equals("/*")) isInsideComment = true;
+        else if (substring.equals("*/")) isInsideComment = false;
+      }
     }
   }
 
