@@ -8,31 +8,35 @@ import java.util.stream.Collectors;
 
 class CodeLinesCounter {
 
-  //http://codekata.com/kata/kata13-counting-code-lines/ -- all requirements are described here
+  private static final String MULTI_LINE_COMMENT_START = "/*";
+  private static final String MULTI_LINE_COMMENT_END = "*/";
+  private static final String SINGLE_LINE_COMMENT_START = "//";
+  private static final String CHECK_IF_CODE_EXISTS_AFTER_COMMENT_REGEX = ".*\\*/\\s*[a-zA-Z]+.*";
   private boolean isInsideComment = false;
 
+  // http://codekata.com/kata/kata13-counting-code-lines/ -- all requirements are described here
   int getCodeLinesCount(Path pathToFile) throws IOException {
     List<String> allLines = getAllLines(pathToFile);
     int codeLinesCount = 0;
 
     for (String line : allLines) {
-      if (isInsideComment || line.startsWith("/*")) {
+      if (isInsideComment || line.startsWith(MULTI_LINE_COMMENT_START)) {
         if (lineContainsCode(line)) {
           codeLinesCount++;
         }
-      } else if (!line.startsWith("//")) {
+      } else if (!line.startsWith(SINGLE_LINE_COMMENT_START)) {
         codeLinesCount++;
       }
-      isLineInComment(line);
+      checkIsLineIsComment(line);
     }
     return codeLinesCount;
   }
 
   private boolean lineContainsCode(String line) {
-    return line.matches(".*\\*/\\s*[a-zA-Z]+.*");
+    return line.matches(CHECK_IF_CODE_EXISTS_AFTER_COMMENT_REGEX);
   }
 
-  private void isLineInComment(String line) {
+  private void checkIsLineIsComment(String line) {
     boolean isInsideString = false;
     for (int i = 0; i < line.length() - 1; i++) {
       if (line.charAt(i) == '"') {
@@ -40,16 +44,16 @@ class CodeLinesCounter {
       }
       if (!isInsideString) {
         String substring = line.substring(i, i + 2);
-        if (substring.equals("/*")) isInsideComment = true;
-        else if (substring.equals("*/")) isInsideComment = false;
+        if (substring.equals(MULTI_LINE_COMMENT_START)) isInsideComment = true;
+        else if (substring.equals(MULTI_LINE_COMMENT_END)) isInsideComment = false;
       }
     }
   }
 
   private List<String> getAllLines(Path pathToFile) throws IOException {
     return Files.lines(pathToFile)
-            .filter(s -> !s.isEmpty())
-            .map(String::trim)
-            .collect(Collectors.toList());
+        .filter(s -> !s.isEmpty())
+        .map(String::trim)
+        .collect(Collectors.toList());
   }
 }
